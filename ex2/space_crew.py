@@ -36,9 +36,9 @@ class SpaceMission(BaseModel):
         errors = []
         if self.mission_id[0] != "M":
             errors.append("Mission ID must start with 'M'")
-        if (Rank.COMMANDER or Rank.CAPTAIN) not in [crewMember.rank
-                                                    for crewMember
-                                                    in self.crew]:
+        if len([crewMember.rank for crewMember in self.crew
+                if crewMember.rank == Rank.COMMANDER or
+                crewMember.rank == Rank.CAPTAIN]) == 0:
             errors.append("Mission must have at least one "
                           "Commander or Captain")
         if (self.duration_days > 365 and
